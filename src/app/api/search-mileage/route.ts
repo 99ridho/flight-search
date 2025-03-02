@@ -6,10 +6,10 @@ export async function GET(req: Request): Promise<Response> {
     const query = Object.fromEntries(url.searchParams.entries());
 
     const queryString = buildQueryParams({
-      origin_airport: query.origin_airport,
-      destination_airport: query.destination_airport,
-      start_date: query.departure_date,
-      end_date: query.departure_date,
+      origin_airport: query.originAirport,
+      destination_airport: query.destinationAirport,
+      start_date: query.departureDate,
+      end_date: query.departureDate,
     });
     const seatsAeroUrl = `https://seats.aero/partnerapi/search?${queryString}`;
     const response = await fetch(seatsAeroUrl, {
