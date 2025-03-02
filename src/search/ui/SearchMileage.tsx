@@ -11,7 +11,7 @@ export default function SearchMileage() {
   >();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-y-4">
       <SearchMileageForm
         onSubmit={(params) => {
           setSearchParams({
