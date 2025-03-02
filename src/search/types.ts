@@ -2,7 +2,7 @@ export type MileageSearchParam = {
   originAirport: string;
   destinationAirport: string;
   departureDate: string; // yyyy-MM-dd
-}
+};
 
 export type MileageRoute = {
   ID: string;
@@ -13,7 +13,7 @@ export type MileageRoute = {
   numsDayOut: number;
   distance: number;
   source: string;
-}
+};
 
 export type MileageEntry = {
   ID: string;
@@ -34,10 +34,10 @@ export type MileageEntry = {
   premiumTaxCost: number;
   businessTaxCost: number;
   firstTaxCost: number;
-}
+};
 
 export type MileageResponse = {
   code: number;
   data: MileageEntry[] | undefined;
   errorMessage: string | undefined;
-}
+};
