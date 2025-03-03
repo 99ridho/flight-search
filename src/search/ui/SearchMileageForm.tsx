@@ -10,7 +10,7 @@ const searchMileageSchema = z.object({
   destination: z
     .array(z.string())
     .min(1, "At least one destination is required"),
-  departureDate: z.string().min(1, "Departure date is required"),
+  departureDate: z.string().min(1, "Departure date is required").date(),
 });
 
 export default function SearchMileageForm(props: {
