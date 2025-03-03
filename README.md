@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Introduction
 
-<img width="1878" alt="image" src="https://github.com/user-attachments/assets/75eb6ad9-11c0-4fa7-a6e6-811f520328bd" />
+<img width="2091" alt="image" src="https://github.com/user-attachments/assets/4b6613f2-f898-482b-9776-3f6c62094562" />
 
 Simple flight search app, utilizing [seats.aero partner API](https://developers.seats.aero/reference/cached-search).
 
