@@ -2,6 +2,9 @@ export type MileageSearchParam = {
   originAirports: string[];
   destinationAirports: string[];
   departureDate: string; // yyyy-MM-dd
+  minimumFees?: number;
+  maximumFees?: number;
+  directFlights?: boolean;
 };
 
 export type MileageRoute = {

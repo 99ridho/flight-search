@@ -18,6 +18,9 @@ export default function SearchMileage() {
             departureDate: params.departureDate,
             destinationAirports: params.destination,
             originAirports: params.origin,
+            minimumFees: params.minimumFees,
+            maximumFees: params.maximumFees,
+            directFlights: params.directFlights,
           });
         }}
       />

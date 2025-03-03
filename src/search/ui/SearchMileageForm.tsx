@@ -10,7 +10,10 @@ const searchMileageSchema = z.object({
   destination: z
     .array(z.string())
     .min(1, "At least one destination is required"),
-  departureDate: z.string().min(1, "Departure date is required").date(),
+  departureDate: z.string().min(1, "Departure date is required"),
+  directFlights: z.boolean().optional(),
+  minPrice: z.number().min(0).optional(),
+  maxPrice: z.number().min(0).optional(),
 });
 
 export default function SearchMileageForm(props: {
@@ -18,6 +21,9 @@ export default function SearchMileageForm(props: {
     origin: string[];
     destination: string[];
     departureDate: string;
+    directFlights?: boolean;
+    minimumFees?: number;
+    maximumFees?: number;
   }) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -31,6 +37,10 @@ export default function SearchMileageForm(props: {
   const [destinationAirports, setDestinationAirports] = useState<
     { value: string; label: string }[]
   >([]);
+  const [showFilters, setShowFilters] = useState(false);
+  const [directFlights, setDirectFlights] = useState(false);
+  const [minimumFees, setMinimumFees] = useState(0);
+  const [maximumFees, setMaximumFees] = useState(1000);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,13 +51,14 @@ export default function SearchMileageForm(props: {
       origin: originAirports.map((v) => v.value),
       destination: destinationAirports.map((v) => v.value),
       departureDate: formData.get("date") as string,
+      directFlights,
+      minimumFees,
+      maximumFees,
     };
 
-    // Validate data with Zod
     const result = searchMileageSchema.safeParse(data);
 
     if (!result.success) {
-      // Map Zod errors to state
       const errorMessages: { [key: string]: string } = {};
       result.error.errors.forEach((err) => {
         errorMessages[err.path[0]] = err.message;
@@ -77,14 +88,13 @@ export default function SearchMileageForm(props: {
       className="flex flex-col gap-2 bg-gray-100 p-4 rounded-lg border border-gray-800 w-[90vw]"
     >
       <div className="flex flex-row items-start gap-2">
-        {/* Origin */}
         <div className="flex flex-col gap-y-1 flex-1">
           <p className="text-sm">Origin</p>
           <Select
             isMulti
-            options={airportOptions}
             className="basic-multi-select px-3 py-2 border rounded-md w-full"
             classNamePrefix="select"
+            options={airportOptions}
             onInputChange={fetchAirports}
             onChange={(values) =>
               setOriginAirports(values as { value: string; label: string }[])
@@ -100,15 +110,13 @@ export default function SearchMileageForm(props: {
             <p className="text-red-500 text-sm">{errors.origin}</p>
           )}
         </div>
-
-        {/* Destination */}
         <div className="flex flex-col gap-y-1 flex-1">
           <p className="text-sm">Destination</p>
           <Select
             isMulti
-            options={airportOptions}
             className="basic-multi-select px-3 py-2 border rounded-md w-full"
             classNamePrefix="select"
+            options={airportOptions}
             onInputChange={fetchAirports}
             onChange={(values) =>
               setDestinationAirports(
@@ -126,8 +134,6 @@ export default function SearchMileageForm(props: {
             <p className="text-red-500 text-sm">{errors.destination}</p>
           )}
         </div>
-
-        {/* Departure Date */}
         <div className="flex flex-col gap-y-1 flex-1">
           <p className="text-sm">Departure Date</p>
           <input
@@ -140,11 +146,48 @@ export default function SearchMileageForm(props: {
           )}
         </div>
       </div>
-
-      {/* Submit Button */}
+      <button
+        type="button"
+        className="text-blue-500 underline"
+        onClick={() => setShowFilters(!showFilters)}
+      >
+        {showFilters ? "Hide Filters" : "Show Filters"}
+      </button>
+      {showFilters && (
+        <div className="flex flex-col gap-2 bg-gray-200 p-3 rounded-md">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={directFlights}
+              onChange={(e) => setDirectFlights(e.target.checked)}
+            />
+            Direct Flight Only
+          </label>
+          <div className="flex flex-col gap-1">
+            <label>Price Range</label>
+            <input
+              type="range"
+              min="0"
+              max="10000"
+              value={minimumFees}
+              onChange={(e) => setMinimumFees(Number(e.target.value))}
+            />
+            <input
+              type="range"
+              min="0"
+              max="10000"
+              value={maximumFees}
+              onChange={(e) => setMaximumFees(Number(e.target.value))}
+            />
+            <p>
+              ${minimumFees} - ${maximumFees}
+            </p>
+          </div>
+        </div>
+      )}
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 flex-none w-[10%]"
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
       >
         Search
       </button>

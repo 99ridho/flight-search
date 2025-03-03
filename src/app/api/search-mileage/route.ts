@@ -15,9 +15,9 @@ export async function GET(req: Request): Promise<Response> {
         required_error: "origin airports (comma-separated) is required",
       })
       .date("date must follow the format YYYY-MM-DD"),
-    minimumFees: z.optional(z.coerce.number()),
-    maximumFees: z.optional(z.coerce.number()),
-    onlyDirectFlights: z.optional(z.boolean()),
+    minimumFees: z.optional(z.coerce.number().min(0)),
+    maximumFees: z.optional(z.coerce.number().min(0)),
+    onlyDirectFlights: z.optional(z.coerce.boolean()),
   });
 
   try {
