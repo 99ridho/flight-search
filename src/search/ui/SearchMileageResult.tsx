@@ -63,6 +63,17 @@ export default function SearchMileageResult(props: {
     return "bg-yellow-500 text-white px-2 py-1 rounded";
   };
 
+  const getAvailabilityChipClass = (available: boolean) => {
+    if (!available) return "bg-red-600 text-white px-2 py-1 rounded";
+    return "bg-blue-500 text-white px-2 py-1 rounded";
+  };
+
+  const getRemainingSeatChipClass = (seats: number) => {
+    if (seats == 0) return "bg-red-600 text-white px-2 py-1 rounded";
+    if (seats > 5) return "bg-green-600 text-white px-2 py-1 rounded";
+    return "bg-yellow-500 text-white px-2 py-1 rounded";
+  };
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const paginatedData = data.slice(
     (currentPage - 1) * itemsPerPage,
@@ -92,52 +103,76 @@ export default function SearchMileageResult(props: {
               <td className="p-3">{flight.route.originAirport}</td>
               <td className="p-3">{flight.route.destinationAirport}</td>
               <td className="p-3">
-                <span
-                  className={getChipClass(
-                    flight.isEconomyAvailable,
-                    flight.economyRemainingSeats,
+                <div className="flex flex-col items-center justify-items-center gap-y-2">
+                  <span
+                    className={getAvailabilityChipClass(flight.isEconomyAvailable)}
+                  >
+                    {flight.isEconomyAvailable
+                      ? `${flight.economyMileageCost} miles`
+                      : "Not Available"}
+                  </span>
+                  {flight.isEconomyAvailable && (
+                    <span
+                      className={getRemainingSeatChipClass(flight.economyRemainingSeats)}
+                    >
+                      {`${flight.economyRemainingSeats} remaining`}
+                    </span>
                   )}
-                >
-                  {flight.isEconomyAvailable
-                    ? `${flight.economyMileageCost} miles (${flight.economyRemainingSeats} remaining)`
-                    : "Not Available"}
-                </span>
+                </div>
               </td>
               <td className="p-3">
-                <span
-                  className={getChipClass(
-                    flight.isPremiumAvailable,
-                    flight.premiumRemainingSeats,
+                <div className="flex flex-col items-center justify-items-center gap-y-2">
+                  <span
+                    className={getAvailabilityChipClass(flight.isPremiumAvailable)}
+                  >
+                    {flight.isPremiumAvailable
+                      ? `${flight.premiumMileageCost} miles`
+                      : "Not Available"}
+                  </span>
+                  {flight.isPremiumAvailable && (
+                    <span
+                      className={getRemainingSeatChipClass(flight.premiumRemainingSeats)}
+                    >
+                      {`${flight.premiumRemainingSeats} remaining`}
+                    </span>
                   )}
-                >
-                  {flight.isPremiumAvailable
-                    ? `${flight.premiumMileageCost} miles (${flight.premiumRemainingSeats} remaining)`
-                    : "Not Available"}
-                </span>
+                </div>
               </td>
               <td className="p-3">
-                <span
-                  className={getChipClass(
-                    flight.isBusinessAvailable,
-                    flight.businessRemainingSeats,
+                <div className="flex flex-col items-center justify-items-center gap-y-2">
+                  <span
+                    className={getAvailabilityChipClass(flight.isBusinessAvailable)}
+                  >
+                    {flight.isBusinessAvailable
+                      ? `${flight.businessMileageCost} miles`
+                      : "Not Available"}
+                  </span>
+                  {flight.isBusinessAvailable && (
+                    <span
+                      className={getRemainingSeatChipClass(flight.businessRemainingSeats)}
+                    >
+                      {`${flight.businessRemainingSeats} remaining`}
+                    </span>
                   )}
-                >
-                  {flight.isBusinessAvailable
-                    ? `${flight.businessMileageCost} miles (${flight.businessRemainingSeats} remaining)`
-                    : "Not Available"}
-                </span>
+                </div>
               </td>
               <td className="p-3">
-                <span
-                  className={getChipClass(
-                    flight.isFirstAvailable,
-                    flight.firstRemainingSeats,
+                <div className="flex flex-col items-center justify-items-center gap-y-2">
+                  <span
+                    className={getAvailabilityChipClass(flight.isFirstAvailable)}
+                  >
+                    {flight.isFirstAvailable
+                      ? `${flight.firstMileageCost} miles`
+                      : "Not Available"}
+                  </span>
+                  {flight.isFirstAvailable && (
+                    <span
+                      className={getRemainingSeatChipClass(flight.firstRemainingSeats)}
+                    >
+                      {`${flight.firstRemainingSeats} remaining`}
+                    </span>
                   )}
-                >
-                  {flight.isFirstAvailable
-                    ? `${flight.firstMileageCost} miles (${flight.firstRemainingSeats} remaining)`
-                    : "Not Available"}
-                </span>
+                </div>
               </td>
             </tr>
           ))}
