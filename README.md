@@ -12,6 +12,8 @@ Simple flight search app, utilizing [seats.aero partner API](https://developers.
 - Filter by minimum/maximum fees
 - Filter by direct flights
 
+All of these features are implemented using NextJS, TypeScript, TailwindCSS, and Zod.
+
 ## Up & Running
 
 First, run the development server:
