@@ -38,6 +38,10 @@ export type MileageEntry = {
   premiumTaxCost: number;
   businessTaxCost: number;
   firstTaxCost: number;
+  economyDirect: boolean;
+  premiumDirect: boolean;
+  businessDirect: boolean;
+  firstDirect: boolean;
 };
 
 export type MileageResponse = {
