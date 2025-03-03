@@ -93,7 +93,7 @@ export async function GET(req: Request): Promise<Response> {
       {
         code: 500,
         errorMessages: [
-          "Terjadi kesalahan ketika melakukan pencarian mileage. Silahkan coba beberapa saat lagi",
+          "Error occured when fetching mileages. Please try again.",
         ],
       },
       {

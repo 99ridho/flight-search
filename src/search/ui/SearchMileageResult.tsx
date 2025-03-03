@@ -7,7 +7,9 @@ import { doSearchMileage } from "../searchMileage";
 export default function SearchMileageResult(props: {
   searchParams: MileageSearchParam | null | undefined;
 }) {
-  const [result, setResult] = useState<MileageResponse>();
+  const [result, setResult] = useState<MileageResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -17,10 +19,22 @@ export default function SearchMileageResult(props: {
     }
 
     const fetchResult = async () => {
-      const result = await doSearchMileage(
-        props.searchParams as MileageSearchParam,
-      );
-      setResult({ ...result });
+      setLoading(true);
+      setError(null);
+      try {
+        const result = await doSearchMileage(
+          props.searchParams as MileageSearchParam,
+        );
+        if (result.errorMessages && result.errorMessages.length > 0) {
+          setError(result.errorMessages.join("\n"));
+        } else {
+          setResult({ ...result });
+        }
+      } catch {
+        setError("An unexpected error occurred.");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchResult();
@@ -30,9 +44,17 @@ export default function SearchMileageResult(props: {
     return null;
   }
 
+  if (loading) {
+    return <div className="text-center py-4">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 py-4">Error: {error}</div>;
+  }
+
   const data = result?.data;
   if (!data) {
-    return null;
+    return <div className="text-center py-4">No results found.</div>;
   }
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
