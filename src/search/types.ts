@@ -1,6 +1,6 @@
 export type MileageSearchParam = {
-  originAirport: string;
-  destinationAirport: string;
+  originAirports: string[];
+  destinationAirports: string[];
   departureDate: string; // yyyy-MM-dd
 };
 

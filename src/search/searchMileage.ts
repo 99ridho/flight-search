@@ -5,8 +5,8 @@ export async function doSearchMileage(
   params: MileageSearchParam,
 ): Promise<MileageResponse> {
   const queryString = buildQueryParams({
-    originAirport: params.originAirport,
-    destinationAirport: params.destinationAirport,
+    originAirport: params.originAirports.join(","),
+    destinationAirport: params.destinationAirports.join(","),
     departureDate: params.departureDate,
   });
 

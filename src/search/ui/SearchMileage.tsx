@@ -16,8 +16,8 @@ export default function SearchMileage() {
         onSubmit={(params) => {
           setSearchParams({
             departureDate: params.departureDate,
-            destinationAirport: params.destination,
-            originAirport: params.origin,
+            destinationAirports: params.destination,
+            originAirports: params.origin,
           });
         }}
       />
