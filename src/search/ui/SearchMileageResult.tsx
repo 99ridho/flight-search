@@ -57,12 +57,6 @@ export default function SearchMileageResult(props: {
     return <div className="text-center py-4">No results found.</div>;
   }
 
-  const getChipClass = (available: boolean, seats: number) => {
-    if (!available) return "bg-red-600 text-white px-2 py-1 rounded";
-    if (seats > 5) return "bg-green-600 text-white px-2 py-1 rounded";
-    return "bg-yellow-500 text-white px-2 py-1 rounded";
-  };
-
   const getAvailabilityChipClass = (available: boolean) => {
     if (!available) return "bg-red-600 text-white px-2 py-1 rounded";
     return "bg-blue-500 text-white px-2 py-1 rounded";
