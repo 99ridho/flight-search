@@ -57,6 +57,12 @@ export default function SearchMileageResult(props: {
     return <div className="text-center py-4">No results found.</div>;
   }
 
+  const getChipClass = (available: boolean, seats: number) => {
+    if (!available) return "bg-red-600 text-white px-2 py-1 rounded";
+    if (seats > 5) return "bg-green-600 text-white px-2 py-1 rounded";
+    return "bg-yellow-500 text-white px-2 py-1 rounded";
+  };
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const paginatedData = data.slice(
     (currentPage - 1) * itemsPerPage,
@@ -86,24 +92,52 @@ export default function SearchMileageResult(props: {
               <td className="p-3">{flight.route.originAirport}</td>
               <td className="p-3">{flight.route.destinationAirport}</td>
               <td className="p-3">
-                {flight.isEconomyAvailable
-                  ? `${flight.economyMileageCost} miles`
-                  : "Not Available"}
+                <span
+                  className={getChipClass(
+                    flight.isEconomyAvailable,
+                    flight.economyRemainingSeats,
+                  )}
+                >
+                  {flight.isEconomyAvailable
+                    ? `${flight.economyMileageCost} miles (${flight.economyRemainingSeats} remaining)`
+                    : "Not Available"}
+                </span>
               </td>
               <td className="p-3">
-                {flight.isPremiumAvailable
-                  ? `${flight.premiumMileageCost} miles`
-                  : "Not Available"}
+                <span
+                  className={getChipClass(
+                    flight.isPremiumAvailable,
+                    flight.premiumRemainingSeats,
+                  )}
+                >
+                  {flight.isPremiumAvailable
+                    ? `${flight.premiumMileageCost} miles (${flight.premiumRemainingSeats} remaining)`
+                    : "Not Available"}
+                </span>
               </td>
               <td className="p-3">
-                {flight.isBusinessAvailable
-                  ? `${flight.businessMileageCost} miles`
-                  : "Not Available"}
+                <span
+                  className={getChipClass(
+                    flight.isBusinessAvailable,
+                    flight.businessRemainingSeats,
+                  )}
+                >
+                  {flight.isBusinessAvailable
+                    ? `${flight.businessMileageCost} miles (${flight.businessRemainingSeats} remaining)`
+                    : "Not Available"}
+                </span>
               </td>
               <td className="p-3">
-                {flight.isFirstAvailable
-                  ? `${flight.firstMileageCost} miles`
-                  : "Not Available"}
+                <span
+                  className={getChipClass(
+                    flight.isFirstAvailable,
+                    flight.firstRemainingSeats,
+                  )}
+                >
+                  {flight.isFirstAvailable
+                    ? `${flight.firstMileageCost} miles (${flight.firstRemainingSeats} remaining)`
+                    : "Not Available"}
+                </span>
               </td>
             </tr>
           ))}

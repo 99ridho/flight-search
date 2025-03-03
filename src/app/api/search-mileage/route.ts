@@ -73,15 +73,19 @@ export async function GET(req: Request): Promise<Response> {
       isPremiumAvailable: d.WAvailable,
       isBusinessAvailable: d.JAvailable,
       isFirstAvailable: d.FAvailable,
-      economyMileageCost: d.YMileageCostRaw,
-      premiumMileageCost: d.WMileageCostRaw,
-      businessMileageCost: d.JMileageCostRaw,
-      firstMileageCost: d.FMileageCostRaw,
+      economyMileageCost: parseInt(d.YMileageCost, 10),
+      premiumMileageCost: parseInt(d.WMileageCost, 10),
+      businessMileageCost: parseInt(d.JMileageCost, 10),
+      firstMileageCost: parseInt(d.FMileageCost, 10),
       taxesCurrency: d.TaxesCurrency,
       economyTaxCost: d.YTotalTaxes,
       premiumTaxCost: d.WTotalTaxes,
       businessTaxCost: d.JTotalTaxes,
       firstTaxCost: d.FTotalTaxes,
+      economyRemainingSeats: d.YRemainingSeats,
+      premiumRemainingSeats: d.WRemainingSeats,
+      businessRemainingSeats: d.JRemainingSeats,
+      firstRemainingSeats: d.FRemainingSeats,
     }));
 
     return Response.json({

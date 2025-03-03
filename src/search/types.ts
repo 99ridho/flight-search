@@ -29,6 +29,10 @@ export type MileageEntry = {
   premiumMileageCost: number;
   businessMileageCost: number;
   firstMileageCost: number;
+  economyRemainingSeats: number;
+  premiumRemainingSeats: number;
+  businessRemainingSeats: number;
+  firstRemainingSeats: number;
   taxesCurrency: string;
   economyTaxCost: number;
   premiumTaxCost: number;
