@@ -85,7 +85,7 @@ export default function SearchMileageForm(props: {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="flex flex-col gap-2 bg-gray-100 p-4 rounded-lg border border-gray-800 w-[90vw]"
+      className="flex flex-col gap-2 bg-gray-100 p-4 rounded-lg border border-gray-800"
     >
       <div className="flex flex-row items-start gap-2">
         <div className="flex flex-col gap-y-1 flex-1">
