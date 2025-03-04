@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { doSearchMileage } from "../searchMileage";
 
 export default function SearchMileageResult(props: {
-  searchParams: MileageSearchParam | null | undefined;
+  searchParams: MileageSearchParam;
 }) {
   const [result, setResult] = useState<MileageResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -22,9 +22,7 @@ export default function SearchMileageResult(props: {
       setLoading(true);
       setError(null);
       try {
-        const result = await doSearchMileage(
-          props.searchParams as MileageSearchParam,
-        );
+        const result = await doSearchMileage(props.searchParams);
         if (result.errorMessages && result.errorMessages.length > 0) {
           setError(result.errorMessages.join("\n"));
         } else {
@@ -99,15 +97,19 @@ export default function SearchMileageResult(props: {
               <td className="p-3">
                 <div className="flex flex-col items-center justify-items-center gap-y-2">
                   <span
-                    className={getAvailabilityChipClass(flight.isEconomyAvailable)}
+                    className={getAvailabilityChipClass(
+                      flight.isEconomyAvailable,
+                    )}
                   >
                     {flight.isEconomyAvailable
-                      ? `${flight.economyMileageCost} miles`
+                      ? `${flight.economyMileageCost} miles + ${flight.taxesCurrency} ${flight.economyTaxCost}`
                       : "Not Available"}
                   </span>
                   {flight.isEconomyAvailable && (
                     <span
-                      className={getRemainingSeatChipClass(flight.economyRemainingSeats)}
+                      className={getRemainingSeatChipClass(
+                        flight.economyRemainingSeats,
+                      )}
                     >
                       {`${flight.economyRemainingSeats} remaining`}
                     </span>
@@ -117,15 +119,19 @@ export default function SearchMileageResult(props: {
               <td className="p-3">
                 <div className="flex flex-col items-center justify-items-center gap-y-2">
                   <span
-                    className={getAvailabilityChipClass(flight.isPremiumAvailable)}
+                    className={getAvailabilityChipClass(
+                      flight.isPremiumAvailable,
+                    )}
                   >
                     {flight.isPremiumAvailable
-                      ? `${flight.premiumMileageCost} miles`
+                      ? `${flight.premiumMileageCost} miles + ${flight.taxesCurrency} ${flight.premiumTaxCost}`
                       : "Not Available"}
                   </span>
                   {flight.isPremiumAvailable && (
                     <span
-                      className={getRemainingSeatChipClass(flight.premiumRemainingSeats)}
+                      className={getRemainingSeatChipClass(
+                        flight.premiumRemainingSeats,
+                      )}
                     >
                       {`${flight.premiumRemainingSeats} remaining`}
                     </span>
@@ -135,15 +141,19 @@ export default function SearchMileageResult(props: {
               <td className="p-3">
                 <div className="flex flex-col items-center justify-items-center gap-y-2">
                   <span
-                    className={getAvailabilityChipClass(flight.isBusinessAvailable)}
+                    className={getAvailabilityChipClass(
+                      flight.isBusinessAvailable,
+                    )}
                   >
                     {flight.isBusinessAvailable
-                      ? `${flight.businessMileageCost} miles`
+                      ? `${flight.businessMileageCost} miles + ${flight.taxesCurrency} ${flight.businessTaxCost}`
                       : "Not Available"}
                   </span>
                   {flight.isBusinessAvailable && (
                     <span
-                      className={getRemainingSeatChipClass(flight.businessRemainingSeats)}
+                      className={getRemainingSeatChipClass(
+                        flight.businessRemainingSeats,
+                      )}
                     >
                       {`${flight.businessRemainingSeats} remaining`}
                     </span>
@@ -153,15 +163,19 @@ export default function SearchMileageResult(props: {
               <td className="p-3">
                 <div className="flex flex-col items-center justify-items-center gap-y-2">
                   <span
-                    className={getAvailabilityChipClass(flight.isFirstAvailable)}
+                    className={getAvailabilityChipClass(
+                      flight.isFirstAvailable,
+                    )}
                   >
                     {flight.isFirstAvailable
-                      ? `${flight.firstMileageCost} miles`
+                      ? `${flight.firstMileageCost} miles + ${flight.taxesCurrency} ${flight.firstTaxCost}`
                       : "Not Available"}
                   </span>
                   {flight.isFirstAvailable && (
                     <span
-                      className={getRemainingSeatChipClass(flight.firstRemainingSeats)}
+                      className={getRemainingSeatChipClass(
+                        flight.firstRemainingSeats,
+                      )}
                     >
                       {`${flight.firstRemainingSeats} remaining`}
                     </span>
