@@ -146,13 +146,21 @@ export default function SearchMileageForm(props: {
           )}
         </div>
       </div>
-      <button
-        type="button"
-        className="text-blue-500 underline"
-        onClick={() => setShowFilters(!showFilters)}
-      >
-        {showFilters ? "Hide Filters" : "Show Filters"}
-      </button>
+      <div className="flex flex-row justify-between">
+        <button
+          type="button"
+          className="text-blue-500 underline"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          {showFilters ? "Hide Filters" : "Show Filters"}
+        </button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-32"
+        >
+          Search
+        </button>
+      </div>
       {showFilters && (
         <div className="flex flex-col gap-2 bg-gray-200 p-3 rounded-md">
           <label className="flex items-center gap-2">
@@ -185,12 +193,6 @@ export default function SearchMileageForm(props: {
           </div>
         </div>
       )}
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-      >
-        Search
-      </button>
     </form>
   );
 }

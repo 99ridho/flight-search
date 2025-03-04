@@ -83,10 +83,10 @@ export default function SearchMileageResult(props: {
             <th className="p-3 text-left">Source</th>
             <th className="p-3 text-left">Departure</th>
             <th className="p-3 text-left">Arrival</th>
-            <th className="p-3 text-left">Economy</th>
-            <th className="p-3 text-left">Premium</th>
-            <th className="p-3 text-left">Business</th>
-            <th className="p-3 text-left">First</th>
+            <th className="p-3 text-center">Economy</th>
+            <th className="p-3 text-center">Premium</th>
+            <th className="p-3 text-center">Business</th>
+            <th className="p-3 text-center">First</th>
           </tr>
         </thead>
         <tbody>
