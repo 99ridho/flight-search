@@ -16,7 +16,7 @@ All of these features are implemented using NextJS, TypeScript, TailwindCSS, and
 
 ## Up & Running
 
-At the first time, copy the `.env.example` to `.env`, then adjust the API key as appropriate 
+At the first time, copy the `.env.example` to `.env`, then adjust the API key as appropriate
 
 Then, run the development server:
 

@@ -13,29 +13,29 @@ export default function SearchMileageResult(props: {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
 
+  const fetchResult = async (searchParams: MileageSearchParam) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await doSearchMileage(searchParams);
+      if (result.errorMessages && result.errorMessages.length > 0) {
+        setError(result.errorMessages.join("\n"));
+      } else {
+        setResult({ ...result });
+      }
+    } catch {
+      setError("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!props.searchParams) {
       return;
     }
 
-    const fetchResult = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const result = await doSearchMileage(props.searchParams);
-        if (result.errorMessages && result.errorMessages.length > 0) {
-          setError(result.errorMessages.join("\n"));
-        } else {
-          setResult({ ...result });
-        }
-      } catch {
-        setError("An unexpected error occurred.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchResult();
+    fetchResult(props.searchParams);
   }, [props.searchParams]);
 
   if (!props.searchParams) {

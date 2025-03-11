@@ -1,4 +1,4 @@
-import { MileageEntry } from "@/search/types";
+import { MileageEntry, MileageResponse } from "@/search/types";
 import { buildQueryParams } from "@/utils";
 import { z } from "zod";
 
@@ -29,15 +29,15 @@ export async function GET(req: Request): Promise<Response> {
       const errorMessages = schemaValidationResult.error.errors.map(
         (e) => e.message,
       );
-      return Response.json(
-        {
-          code: 400,
-          errorMessages: errorMessages,
-        },
-        {
-          status: 400,
-        },
-      );
+
+      const response: MileageResponse = {
+        code: 400,
+        errorMessages: errorMessages,
+      };
+
+      return Response.json(response, {
+        status: 400,
+      });
     }
 
     const queryString = buildQueryParams({
@@ -47,7 +47,7 @@ export async function GET(req: Request): Promise<Response> {
       end_date: query.departureDate,
     });
     const seatsAeroUrl = `https://seats.aero/partnerapi/search?${queryString}`;
-    const response = await fetch(seatsAeroUrl, {
+    const rawResponse = await fetch(seatsAeroUrl, {
       method: "GET",
       headers: {
         "Partner-Authorization": process.env.SEATS_API_KEY ?? "",
@@ -55,7 +55,7 @@ export async function GET(req: Request): Promise<Response> {
       },
     });
 
-    const responseData = await response.json();
+    const responseData = await rawResponse.json();
 
     const calculateTaxes = (taxes: number) => {
       return taxes / 100;
@@ -135,21 +135,22 @@ export async function GET(req: Request): Promise<Response> {
       });
     }
 
-    return Response.json({
+    const response: MileageResponse = {
       code: 200,
       data: results,
-    });
+    };
+
+    return Response.json(response);
   } catch {
-    return Response.json(
-      {
-        code: 500,
-        errorMessages: [
-          "Error occured when fetching mileages. Please try again.",
-        ],
-      },
-      {
-        status: 500,
-      },
-    );
+    const response: MileageResponse = {
+      code: 500,
+      errorMessages: [
+        "Error occured when fetching mileages. Please try again.",
+      ],
+    };
+
+    return Response.json(response, {
+      status: 500,
+    });
   }
 }

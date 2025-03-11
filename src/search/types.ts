@@ -49,6 +49,6 @@ export type MileageEntry = {
 
 export type MileageResponse = {
   code: number;
-  data: MileageEntry[] | undefined;
-  errorMessages: string[] | undefined;
+  data?: MileageEntry[] | undefined;
+  errorMessages?: string[] | undefined;
 };

@@ -5,17 +5,6 @@ import Select from "react-select";
 import { debounce } from "lodash";
 import { z } from "zod";
 
-const searchMileageSchema = z.object({
-  origin: z.array(z.string()).min(1, "At least one origin is required"),
-  destination: z
-    .array(z.string())
-    .min(1, "At least one destination is required"),
-  departureDate: z.string().min(1, "Departure date is required"),
-  directFlights: z.boolean().optional(),
-  minPrice: z.number().min(0).optional(),
-  maxPrice: z.number().min(0).optional(),
-});
-
 export default function SearchMileageForm(props: {
   onSubmit: (params: {
     origin: string[];
@@ -41,6 +30,17 @@ export default function SearchMileageForm(props: {
   const [directFlights, setDirectFlights] = useState(false);
   const [minimumFees, setMinimumFees] = useState(0);
   const [maximumFees, setMaximumFees] = useState(1000);
+
+  const searchMileageSchema = z.object({
+    origin: z.array(z.string()).min(1, "At least one origin is required"),
+    destination: z
+      .array(z.string())
+      .min(1, "At least one destination is required"),
+    departureDate: z.string().min(1, "Departure date is required"),
+    directFlights: z.boolean().optional(),
+    minPrice: z.number().min(0).optional(),
+    maxPrice: z.number().min(0).optional(),
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ export default function SearchMileageForm(props: {
     const data = await result.json();
     const options = data.map((v: { code: string; name: string }) => ({
       value: v.code,
-      label: v.name,
+      label: `${v.code} - ${v.name}`,
     }));
     setAirportOptions(options);
   }, 500);
